@@ -6,12 +6,13 @@ from .models import Post
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = [
+    list_display = (
         'title',
         'counted_views',
         'status',
         'publish_date',
         'created_date'
-    ]
+    )
     search_fields = ['title']
     list_filter = ['status']
+    empty_value_display = '-empty-'
