@@ -16,7 +16,7 @@ class Post(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_date']
+        ordering = ['-publish_date']
 
     def __str__(self):
         return self.title
