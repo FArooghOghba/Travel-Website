@@ -8,11 +8,12 @@ from .models import Post
 class PostAdmin(admin.ModelAdmin):
     list_display = (
         'title',
+        'author',
         'counted_views',
         'status',
         'publish_date',
         'created_date'
     )
     search_fields = ['title']
-    list_filter = ['status']
+    list_filter = ['author', 'status']
     empty_value_display = '-empty-'

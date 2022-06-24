@@ -14,7 +14,7 @@
                 </h1>
                 <p class="text-white link-nav"><a href="{% url 'website:index' %}">Home </a> <span
                         class="lnr lnr-arrow-right"></span><a href="{% url 'blog:home' %}">Blog </a> <span
-                        class="lnr lnr-arrow-right"></span> <a href="{% url 'blog:single' post.id %}"> Blog Details Page</a></p>
+                        class="lnr lnr-arrow-right"></span> <a href="{% url 'blog:single' post_id=post.id %}"> Blog Details Page</a></p>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
                             <li><a href="#">Lifestyle</a></li>
                         </ul>
                         <div class="user-details row">
-                            <p class="user-name col-lg-12 col-md-12 col-6"><a href="#">Mark wiens</a> <span
+                            <p class="user-name col-lg-12 col-md-12 col-6"><a href="#">{{ post.author.get_full_name }}</a> <span
                                     class="lnr lnr-user"></span></p>
                             <p class="date col-lg-12 col-md-12 col-6"><a href="#">{{ post.publish_date | date:'d M, Y' }}</a> <span
                                     class="lnr lnr-calendar-full"></span></p>
