@@ -120,11 +120,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # setting static file for production mode.
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+# Media files (for upload media files form users)
+
+MEDIA_RUL = '/media/'  # MEDIA_URL is the URL that will serve the media files.
+MEDIA_ROOT = BASE_DIR / 'media'  # MEDIA_ROOT is the path to the root directory where the files are getting stored.
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
