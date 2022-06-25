@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
+from django.core.paginator import Paginator
+
 from blog.models import Post
 
 
@@ -13,7 +15,7 @@ def blog_home_view(request):
 
 
 def blog_single_view(request, post_id):
-    post = Post.objects.get(pk=post_id, publish_date__lte=timezone.now(), status=True)
+    post = get_object_or_404(Post, pk=post_id, publish_date__lte=timezone.now(), status=True)
     post.counted_views += 1
     post.save()
 
