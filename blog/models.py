@@ -29,7 +29,7 @@ class Post(models.Model):
 
     def snippet(self):
         words = self.content.split()[:30]
-        return f'{" ".join(words)}'
+        return f'{" ".join(words)} ...'
 
     def __str__(self):
         return self.title
