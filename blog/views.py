@@ -22,12 +22,12 @@ def blog_single_view(request, post_id):
     #     publish_date__lte=timezone.now(),
     #     status=True,
     #     publish_date__lt=current_post.publish_date,
-    # ).first()
+    # )
     # next_post = Post.objects.filter(
     #     publish_date__lte=timezone.now(),
     #     status=True,
     #     publish_date__gt=current_post.publish_date
-    # ).first()
+    # )
 
     # find prev & next page with list comprehension.
     all_post = Post.objects.filter(publish_date__lte=timezone.now(), status=True)

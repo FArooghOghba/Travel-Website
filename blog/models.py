@@ -27,5 +27,9 @@ class Post(models.Model):
     class Meta:
         ordering = ['-publish_date']
 
+    def snippet(self):
+        words = self.content.split()[:30]
+        return f'{" ".join(words)}'
+
     def __str__(self):
         return self.title

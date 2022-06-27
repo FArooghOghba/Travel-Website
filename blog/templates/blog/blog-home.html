@@ -113,7 +113,10 @@
                         <a class="posts-title" href="{% url 'blog:single' post.id %}"><h3>{{ post.title }}</h3>
                         </a>
                         <p class="excert">
-                            {{ post.content|slice:":170" }} ...
+                            {{ post.content|truncatewords:30 }}
+
+<!--                            truncatewords with snippet function-->
+<!--                            {{ post.snippet }}-->
                         </p>
                         <a href="{% url 'blog:single' post.id %}" class="primary-btn">View More</a>
                     </div>
