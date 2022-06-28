@@ -6,8 +6,10 @@ from blog.models import Post
 
 # Create your views here.
 
-def blog_home_view(request):
+def blog_home_view(request, cat_name=None):
     all_post = Post.objects.filter(publish_date__lte=timezone.now(), status=True)
+    if cat_name:
+        all_post = all_post.filter(category__name=cat_name)
 
     context = {'all_post': all_post}
     return render(request, template_name='blog/blog-home.html', context=context)
