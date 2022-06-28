@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+
+{% load blog_tags %}
 {% load static %}
 
 {% block content %}
@@ -154,7 +156,7 @@
 
                     {% include 'blog/blog-writer.html' %}
 
-                    {% include 'blog/blog-post-category.html' %}
+                    {% post_categories %}
 
                 </div>
             </div>
