@@ -6,10 +6,12 @@ from blog.models import Post
 
 # Create your views here.
 
-def blog_home_view(request, cat_name=None):
+def blog_home_view(request, **kwargs):
     all_post = Post.objects.filter(publish_date__lte=timezone.now(), status=True)
-    if cat_name:
-        all_post = all_post.filter(category__name=cat_name)
+    if kwargs.get('cat_name') is not None:
+        all_post = all_post.filter(category__name=kwargs['cat_name'])
+    if kwargs.get('author_username') is not None:
+        all_post = all_post.filter(author__username=kwargs['author_username'])
 
     context = {'all_post': all_post}
     return render(request, template_name='blog/blog-home.html', context=context)
@@ -42,3 +44,14 @@ def blog_single_view(request, post_id):
         'prev_post': prev_post
     }
     return render(request, template_name='blog/blog-single.html', context=context)
+
+
+def blog_search_view(request):
+    search_post = Post.objects.filter(publish_date__lte=timezone.now(), status=True)
+
+    if request.method == 'GET':
+        if s := request.GET.get('s'):
+            search_post = search_post.filter(content__contains=s)
+
+    context = {'all_post': search_post}
+    return render(request, 'blog/blog-home.html', context=context)
