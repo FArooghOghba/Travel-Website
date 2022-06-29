@@ -1,8 +1,7 @@
-from blog.models import *
-
 from django import template
 from django.utils import timezone
-from django.db.models.aggregates import Count
+
+from blog.models import *
 
 register = template.Library()
 
