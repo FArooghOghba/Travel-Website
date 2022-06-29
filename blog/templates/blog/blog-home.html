@@ -91,7 +91,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 posts-list">
-                {% for post in all_post %}
+                {% for post in all_post_pages %}
                     <div class="single-post row">
                     <div class="col-lg-3  col-md-3 meta-details">
                         <ul class="tags">
@@ -128,27 +128,36 @@
                     </div>
                 </div>
                 {% endfor %}
+
                 <nav class="blog-pagination justify-content-center d-flex">
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Previous">
-		                                    <span aria-hidden="true">
-		                                        <span class="lnr lnr-chevron-left"></span>
-		                                    </span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a href="#" class="page-link">01</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">02</a></li>
-                        <li class="page-item"><a href="#" class="page-link">03</a></li>
-                        <li class="page-item"><a href="#" class="page-link">04</a></li>
-                        <li class="page-item"><a href="#" class="page-link">09</a></li>
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Next">
-		                                    <span aria-hidden="true">
-		                                        <span class="lnr lnr-chevron-right"></span>
-		                                    </span>
-                            </a>
-                        </li>
+                        {% if all_post_pages.has_previous %}
+                            <li class="page-item">
+                                <a href="?page={{ all_post_pages.previous_page_number }}" class="page-link" aria-label="Previous">
+                                        <span aria-hidden="true">
+                                            <span class="lnr lnr-chevron-left"></span>
+                                        </span>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for page_num in all_post_pages.paginator.page_range %}
+                            {% if all_post_pages.number == page_num %}
+                                <li class="page-item active"><a href="?page={{ page_num }}" class="page-link">{{ page_num }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a href="?page={{ page_num }}" class="page-link">{{ page_num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if all_post_pages.has_next %}
+                            <li class="page-item">
+                                <a href="?page={{ all_post_pages.next_page_number }}" class="page-link" aria-label="Next">
+                                        <span aria-hidden="true">
+                                            <span class="lnr lnr-chevron-right"></span>
+                                        </span>
+                                </a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>

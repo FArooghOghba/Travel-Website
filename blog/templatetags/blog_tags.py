@@ -15,7 +15,10 @@ def latest_posts():
 
 @register.inclusion_tag('blog/blog-post-category.html')
 def post_categories():
-    # result = Category.objects.annotate(post_count=Count('post'))
+    # filter categories count with django ORM
+    # result = Category.objects. \
+    #     filter(post__publish_date__lte=timezone.now(), post__status=True). \
+    #     annotate(post_count=Count('post'))
     # for cat in result:
     #     print(cat, cat.post_count)
 
