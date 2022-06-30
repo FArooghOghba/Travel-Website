@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import ContactForm
 
 
 # Create your views here.
@@ -11,7 +12,14 @@ def about_view(request):
 
 
 def contact_view(request):
-    return render(request, template_name='website/contact.html')
+    if request.method == 'POST':
+        contact_form = ContactForm(request.POST)
+        if contact_form.is_valid():
+            contact_form.save()
+
+    contact_form = ContactForm()
+    context = {'contact_form': contact_form}
+    return render(request, template_name='website/contact.html', context=context)
 
 
 def elements_view(request):
