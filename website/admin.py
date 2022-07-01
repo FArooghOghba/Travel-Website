@@ -15,6 +15,7 @@ class ContactAdmin(admin.ModelAdmin):
 
     list_filter = ['email']
     search_fields = ['name', 'subject']
+    empty_value_display = '-empty-'
 
 
 admin.site.register(Newsletter)

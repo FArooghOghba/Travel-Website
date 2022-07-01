@@ -31,9 +31,9 @@
                         <span class="lnr lnr-home"></span>
                     </div>
                     <div class="contact-details">
-                        <h5>Binghamton, New York</h5>
+                        <h5>Khoozestan, Ahvaz</h5>
                         <p>
-                            4343 Hinkle Deegan Lake Road
+                            Zeytoon Kargari
                         </p>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                         <span class="lnr lnr-envelope"></span>
                     </div>
                     <div class="contact-details">
-                        <h5>support@colorlib.com</h5>
+                        <h5>faroogh.oghba@gmail.com</h5>
                         <p>Send us your query anytime!</p>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
 
                             <input name="subject" placeholder="Enter subject" onfocus="this.placeholder = ''"
                                    onblur="this.placeholder = 'Enter subject'" class="common-input mb-20 form-control"
-                                   required="" type="text">
+                                   type="text">
                         </div>
                         <div class="col-lg-6 form-group">
                             <textarea class="common-textarea form-control" name="message" placeholder="Enter Messege"
@@ -88,30 +88,6 @@
                     </div>
                 </form>
             </div>
-
-            {% if messages %}
-                {% for message in messages %}
-                  <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
-                {% endfor %}
-            {% endif %}
-
-            {% if form.errors %}
-                <div class="alert alert-error">
-                      <h4>Please fix the following errors</h4>
-                      <ul>
-                        {% for field in form %}
-                          {% if field.errors %}
-                            {% for error in field.errors %}
-                              <li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
-                            {% endfor %}
-                          {% endif %}
-                        {% endfor %}
-                      </ul>
-                      {% if form.non_field_errors %}
-                        {{ form.non_field_errors }}
-                      {% endif %}
-                </div>
-            {% endif %}
 
         </div>
     </div>

@@ -16,7 +16,9 @@ def contact_view(request):
     if request.method == 'POST':
         contact_form = ContactForm(request.POST)
         if contact_form.is_valid():
-            contact_form.save()
+            form = contact_form.save(commit=False)
+            form.name = 'Unknown'
+            form.save()
             messages.success(request, 'Your ticket submitted Successfully.')
         else:
             messages.error(request, "Your ticket didn't submitted.")
@@ -35,5 +37,8 @@ def newsletter_view(request):
         newsletter_form = NewsletterForm(request.POST)
         if newsletter_form.is_valid():
             newsletter_form.save()
+            messages.success(request, 'Your request submitted Successfully.')
+        else:
+            messages.error(request, "Invalid submission.")
 
     return HttpResponseRedirect('/')
