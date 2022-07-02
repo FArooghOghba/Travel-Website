@@ -1,4 +1,5 @@
 from django import template
+from django.db.models import Count
 from django.utils import timezone
 
 from blog.models import *
@@ -15,17 +16,17 @@ def latest_posts():
 @register.inclusion_tag('blog/blog-post-category.html')
 def post_categories():
     # filter categories count with django ORM
-    # result = Category.objects. \
-    #     filter(post__publish_date__lte=timezone.now(), post__status=True). \
-    #     annotate(post_count=Count('post'))
-    # for cat in result:
-    #     print(cat, cat.post_count)
+    cat_post_count = Category.objects. \
+        filter(post__publish_date__lte=timezone.now(), post__status=True). \
+        annotate(post_count=Count('post'))
 
-    categories = Category.objects.all()
-    posts = Post.objects.filter(publish_date__lte=timezone.now(), status=True)
+    return {'cat_post_count': cat_post_count}
 
-    post_categories_count = {}
-    for category in categories:
-        post_categories_count[category.name] = posts.filter(category=category).count()
-
-    return {'post_cats_count': post_categories_count}
+    # categories = Category.objects.all()
+    # posts = Post.objects.filter(publish_date__lte=timezone.now(), status=True)
+    #
+    # post_categories_count = {}
+    # for category in categories:
+    #     post_categories_count[category.name] = posts.filter(category=category).count()
+    #
+    # return {'post_cats_count': post_categories_count}

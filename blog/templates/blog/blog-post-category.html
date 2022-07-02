@@ -3,11 +3,11 @@
     <h4 class="category-title">Post Catgories</h4>
     <ul class="cat-list">
 
-       {% for post_cat, count in post_cats_count.items %}
+       {% for cat in cat_post_count %}
             <li>
-                <a href="{% url 'blog:category' cat_name=post_cat %}" class="d-flex justify-content-between">
-                    <p>{{ post_cat }}</p>
-                    <p>{{ count }}</p>
+                <a href="{% url 'blog:category' cat_name=cat.name %}" class="d-flex justify-content-between">
+                    <p>{{ cat.name }}</p>
+                    <p>{{ cat.post_count }}</p>
                 </a>
             </li>
        {% endfor %}
