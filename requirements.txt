@@ -1,6 +1,7 @@
 asgiref==3.5.2
 Django==3.2.13
 django-extensions==3.1.5
+django-robots==5.0
 Pillow==9.1.1
 pydot==1.4.2
 pyparsing==3.0.9

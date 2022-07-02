@@ -43,11 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django_extensions',
+    'robots',
     
     'website.apps.WebsiteConfig',
     'blog.apps.BlogConfig'
 ]
 
+# Sites Framework
 SITE_ID = 2
 
 MIDDLEWARE = [
