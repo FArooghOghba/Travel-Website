@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 
@@ -30,6 +31,9 @@ class Post(models.Model):
     def snippet(self):
         words = self.content.split()[:30]
         return f'{" ".join(words)} ...'
+
+    def get_absolute_url(self):
+        return reverse('blog:single', kwargs={'post_id': self.id})
 
     def __str__(self):
         return self.title
