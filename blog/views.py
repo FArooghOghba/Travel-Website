@@ -13,6 +13,8 @@ def blog_home_view(request, **kwargs):
         all_post = all_post.filter(category__name=kwargs['cat_name'])
     if kwargs.get('author_username') is not None:
         all_post = all_post.filter(author__username=kwargs['author_username'])
+    if kwargs.get('tag_name') is not None:
+        all_post = all_post.filter(tags__name=kwargs['tag_name'])
 
     paginator = Paginator(all_post, 3)
     try:
