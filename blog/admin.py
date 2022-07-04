@@ -22,4 +22,19 @@ class PostAdmin(SummernoteModelAdmin):
     summernote_fields = ('content',)
 
 
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = [
+        'post',
+        'email',
+        'subject',
+        'approved',
+        'created_date'
+    ]
+
+    search_fields = ['email', 'subject']
+    list_filter = ['email', 'approved']
+    empty_value_display = '-empty-'
+
+
 admin.site.register(Category)

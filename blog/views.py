@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from blog.models import Post
+from blog.models import Post, Comment
 
 
 # Create your views here.
@@ -34,6 +34,8 @@ def blog_single_view(request, post_id):
     current_post.counted_views += 1
     current_post.save()
 
+    comments = Comment.objects.filter(post=current_post, approved=True)
+
     # prev_post = Post.objects.filter(             # find prev & next page with django orm.
     #     publish_date__lte=timezone.now(),
     #     status=True,
@@ -52,6 +54,7 @@ def blog_single_view(request, post_id):
 
     context = {
         'current_post': current_post,
+        'comments': comments,
         'next_post': next_post,
         'prev_post': prev_post
     }
