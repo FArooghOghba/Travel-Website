@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
+from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from blog.models import Post, Comment
+from blog.forms import CommentForm
 
 
 # Create your views here.
@@ -30,9 +32,21 @@ def blog_home_view(request, **kwargs):
 
 
 def blog_single_view(request, post_id):
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment_form.save()
+            messages.success(request, 'Your comment submitted Successfully.')
+        else:
+            messages.error(request, "Your comment didn't submitted.")
+
     current_post = get_object_or_404(Post, pk=post_id, publish_date__lte=timezone.now(), status=True)
     current_post.counted_views += 1
     current_post.save()
+
+    all_post = Post.objects.filter(publish_date__lte=timezone.now(), status=True)
+    prev_post = [post for post in all_post if post.publish_date < current_post.publish_date]
+    next_post = [post for post in list(reversed(all_post)) if post.publish_date > current_post.publish_date]
 
     comments = Comment.objects.filter(post=current_post, approved=True)
 
@@ -48,9 +62,6 @@ def blog_single_view(request, post_id):
     # )
 
     # find prev & next page with list comprehension.
-    all_post = Post.objects.filter(publish_date__lte=timezone.now(), status=True)
-    prev_post = [post for post in all_post if post.publish_date < current_post.publish_date]
-    next_post = [post for post in list(reversed(all_post)) if post.publish_date > current_post.publish_date]
 
     context = {
         'current_post': current_post,

@@ -30,3 +30,9 @@ def post_categories():
     #     post_categories_count[category.name] = posts.filter(category=category).count()
     #
     # return {'post_cats_count': post_categories_count}
+
+
+@register.simple_tag
+def comments_count(post_id):
+    counted_comment = Comment.objects.filter(post=post_id, approved=True).count()
+    return counted_comment
