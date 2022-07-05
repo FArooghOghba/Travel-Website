@@ -1,19 +1,28 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 
 
 # Create your views here.
 
 def login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('/')
-
-    return render(request, template_name='accounts/login.html')
+    if request.user.is_authenticated:
+        return redirect('/')
+    elif request.method == 'GET':
+        return render(request, 'accounts/login.html')
+    elif request.method == 'POST':
+        authenticate_form = AuthenticationForm(request=request, data=request.POST)
+        if authenticate_form.is_valid():
+            username = authenticate_form.cleaned_data.get('username')
+            password = authenticate_form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('/')
+            else:
+                print('User not found')
+        else:
+            return render(request, 'accounts/login.html')
 
 
 def signup_view(request):
