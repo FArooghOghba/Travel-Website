@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -41,35 +41,38 @@ def blog_single_view(request, post_id):
             messages.error(request, "Your comment didn't submitted.")
 
     current_post = get_object_or_404(Post, pk=post_id, publish_date__lte=timezone.now(), status=True)
-    current_post.counted_views += 1
-    current_post.save()
+    if not current_post.login_require or (current_post.login_require is True and request.user.is_authenticated is True):
+        current_post.counted_views += 1
+        current_post.save()
 
-    all_post = Post.objects.filter(publish_date__lte=timezone.now(), status=True)
-    prev_post = [post for post in all_post if post.publish_date < current_post.publish_date]
-    next_post = [post for post in list(reversed(all_post)) if post.publish_date > current_post.publish_date]
+        all_post = Post.objects.filter(publish_date__lte=timezone.now(), status=True)
+        prev_post = [post for post in all_post if post.publish_date < current_post.publish_date]
+        next_post = [post for post in list(reversed(all_post)) if post.publish_date > current_post.publish_date]
 
-    comments = Comment.objects.filter(post=current_post, approved=True)
+        comments = Comment.objects.filter(post=current_post, approved=True)
 
-    # prev_post = Post.objects.filter(             # find prev & next page with django orm.
-    #     publish_date__lte=timezone.now(),
-    #     status=True,
-    #     publish_date__lt=current_post.publish_date,
-    # )
-    # next_post = Post.objects.filter(
-    #     publish_date__lte=timezone.now(),
-    #     status=True,
-    #     publish_date__gt=current_post.publish_date
-    # )
+        # prev_post = Post.objects.filter(             # find prev & next page with django orm.
+        #     publish_date__lte=timezone.now(),
+        #     status=True,
+        #     publish_date__lt=current_post.publish_date,
+        # )
+        # next_post = Post.objects.filter(
+        #     publish_date__lte=timezone.now(),
+        #     status=True,
+        #     publish_date__gt=current_post.publish_date
+        # )
 
-    # find prev & next page with list comprehension.
+        # find prev & next page with list comprehension.
 
-    context = {
-        'current_post': current_post,
-        'comments': comments,
-        'next_post': next_post,
-        'prev_post': prev_post
-    }
-    return render(request, template_name='blog/blog-single.html', context=context)
+        context = {
+            'current_post': current_post,
+            'comments': comments,
+            'next_post': next_post,
+            'prev_post': prev_post
+        }
+        return render(request, template_name='blog/blog-single.html', context=context)
+    else:
+        return redirect('accounts:login')
 
 
 def blog_search_view(request):

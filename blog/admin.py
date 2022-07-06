@@ -13,6 +13,7 @@ class PostAdmin(SummernoteModelAdmin):
         'author',
         'counted_views',
         'status',
+        'login_require',
         'publish_date',
         'created_date'
     )
