@@ -15,7 +15,15 @@ def login_view(request):
 
         if authenticate_form.is_valid():
             user = authenticate_form.get_user()
+            remember_me = authenticate_form.cleaned_data.get('remember_me')
+
             login(request, user)
+            # check for remember_me checkbox
+            if remember_me:
+                request.session.set_expiry(30 * 24 * 60 * 60)  # one month
+            else:
+                request.session.set_expiry(0)
+
             messages.info(request, f"You are now logged in as {user.username}")
             return redirect('/')
         else:
@@ -27,6 +35,7 @@ def login_view(request):
 @login_required
 def logout_view(request):
     logout(request)
+    messages.info(request, "Logged out successfully!")
     return redirect('/')
 
 
@@ -37,7 +46,17 @@ def signup_view(request):
             if signup_form.is_valid():
                 user = signup_form.save()
 
+                # login user after signup.
+                remember_me = signup_form.cleaned_data.get('remember_me')
+                print(remember_me)
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+
+                # check for remember_me checkbox after login.
+                if remember_me:
+                    request.session.set_expiry(30 * 24 * 60 * 60)  # one month
+                else:
+                    request.session.set_expiry(0)
+
                 messages.success(request, f"New account created and logged in successfully: {user.username}")
                 return redirect('/')
             else:
