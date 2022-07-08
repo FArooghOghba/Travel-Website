@@ -19,9 +19,9 @@ def contact_view(request):
             form = contact_form.save(commit=False)
             form.name = 'Unknown'
             form.save()
-            messages.success(request, 'Your ticket submitted Successfully.')
+            messages.success(request, 'Your message submitted Successfully.')
         else:
-            messages.error(request, "Your ticket didn't submitted.")
+            messages.error(request, "Your message didn't submitted.")
 
     contact_form = ContactForm()
     context = {'contact_form': contact_form}

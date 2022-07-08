@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from accounts.forms import CustomUserCreationForm, CustomAuthenticationForm
 
 
@@ -15,7 +16,10 @@ def login_view(request):
         if authenticate_form.is_valid():
             user = authenticate_form.get_user()
             login(request, user)
+            messages.info(request, f"You are now logged in as {user.username}")
             return redirect('/')
+        else:
+            messages.error(request, "Invalid username or password.")
 
     return render(request, 'accounts/login.html')
 
@@ -31,8 +35,15 @@ def signup_view(request):
         if request.method == 'POST':
             signup_form = CustomUserCreationForm(request.POST)
             if signup_form.is_valid():
-                signup_form.save()
-                return redirect(reverse('accounts:login'))
+                user = signup_form.save()
+
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                messages.success(request, f"New account created and logged in successfully: {user.username}")
+                return redirect('/')
+            else:
+                for msg in signup_form.error_messages:
+                    messages.error(request, f"{msg}: {signup_form.error_messages[msg]}")
+
         return render(request, template_name='accounts/signup.html')
 
     return redirect('/')
