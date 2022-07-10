@@ -2,6 +2,7 @@ asgiref==3.5.2
 bleach==5.0.1
 Django==3.2.13
 django-debug-toolbar==3.5.0
+django-dotenv==1.4.2
 django-extensions==3.1.5
 django-multi-captcha-admin==2.0.0
 django-ranged-response==0.2.0
