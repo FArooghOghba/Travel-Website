@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+import django.core.mail.backends.smtp
 from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -134,7 +137,7 @@ MEDIA_RUL = '/media/'  # MEDIA_URL is the URL that will serve the media files.
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# mapping for messages
+# Mapping for Messages
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',
         messages.INFO: 'alert-info',
@@ -143,7 +146,7 @@ MESSAGE_TAGS = {
         messages.ERROR: 'alert-danger',
 }
 
-# summernote config
+# Summernote Config
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
@@ -178,7 +181,18 @@ SUMMERNOTE_CONFIG = {
     }
 }
 
-# multi captcha admin setting
+# Multi Captcha Admin Setting
 MULTI_CAPTCHA_ADMIN = {
     'engine': 'simple-captcha',
 }
+
+
+# SMTP Configuration
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+
