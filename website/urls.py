@@ -10,4 +10,5 @@ urlpatterns = [
     path('elements/', elements_view, name='elements'),
 
     path('newsletter/', newsletter_view, name='newsletter'),
+    path('coming-soon/', coming_soon_view, name='coming_soon'),
 ]

@@ -42,3 +42,7 @@ def newsletter_view(request):
             messages.error(request, "Invalid submission.")
 
     return HttpResponseRedirect('/')
+
+
+def coming_soon_view(request):
+    return render(request, 'website/coming-soon.html')
