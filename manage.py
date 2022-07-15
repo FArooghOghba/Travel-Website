@@ -8,7 +8,7 @@ import dotenv
 def main():
     """Run administrative tasks."""
     dotenv.read_dotenv()  # It's added for environment variable.
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.setting.development')  # adding mysite.setting.development instead of mysite.settings for execute setting from development setting
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.setting.production')  # adding mysite.setting.development instead of mysite.settings for execute setting from development setting
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
