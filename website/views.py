@@ -45,4 +45,4 @@ def newsletter_view(request):
 
 
 def coming_soon_view(request):
-    return render(request, 'website/coming-soon2.html')
+    return render(request, 'website/coming-soon.html')
