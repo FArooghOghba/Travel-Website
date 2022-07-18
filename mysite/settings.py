@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'robots',
     'taggit',
     'captcha',
+    'compressor',
     
     'website.apps.WebsiteConfig',
     'blog.apps.BlogConfig',
@@ -200,3 +201,16 @@ EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 # Maintenance or Coming soon Mode
 
 COMING_SOON_MODE = int(os.environ.get('COMING_SOON_MODE'))
+
+
+# Django Compressor
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_ENABLED = True
+# COMPRESS_ROOT = STATIC_ROOT ##django compressor
